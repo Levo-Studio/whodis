@@ -76,6 +76,11 @@ try {
   process.exit(1);
 }
 
+let extra = "";
+if (ips.length > 1) {
+  extra = " (+" + (ips.length - 1) + " more)";
+}
+
 // ---------- 2. Website ----------
 
 const start = performance.now();
@@ -157,7 +162,7 @@ if (headerMatch) {
 stopSpinner();
 
 console.log("  " + gray + "Domain:" + reset + "   " + bold + value + domain + reset + "\n");
-console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + "\n");
+console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + gray + extra + reset + "\n");
 console.log("  " + gray + "Response" + reset + "  " + bold + value + endRounded + "ms" + reset + "\n");
 console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + "\n");
 
