@@ -7,8 +7,6 @@ if (!domain) {
   process.exit(1)
 }
 
-console.log("Checking " + domain);
-
 let ips;
 try {
   ips = await dns.resolve4(domain);
@@ -17,31 +15,25 @@ try {
   process.exit(1);
 }
 
-console.log("IP: " + ips[0]);
-
 const start = performance.now();
 
 let response;
 try {
-  response = await fetch("https://" + domain);
+  response = await fetch("https://" + domain, { signal: AbortSignal.timeout(5000) });
 } catch {
   console.error(domain + " not responding")
   process.exit(1);
 }
 
-
 const end = performance.now();
 const endRounded = Math.round(end - start);
 
-console.log("Response: " + endRounded + "ms");
-
+let ipInfo = {};
 let ipResponse;
 try {
   ipResponse = await fetch("https://ipinfo.io/" + ips[0] + "/json");
   ipInfo = await ipResponse.json();
-} catch {
-  console.error("Failed to fetch ipinfo of " + domain)
-}
+} catch {}
 
 const platforms = [
   { header: "x-vercel-id", name: "Vercel" },
@@ -92,5 +84,12 @@ if (headerMatch) {
   platform = "unknown";
 }
 
+console.log("IP:       " + ips[0]);
+console.log("Response: " + endRounded + "ms");
 console.log("Platform: " + platform);
-console.log("Network:  " + orgName + " · " + ipInfo.city + ", " + ipInfo.country);
+
+if (ipInfo.org) {
+  console.log("Network:  " + orgName + " · " + ipInfo.city + ", " + ipInfo.country);
+} else {
+  console.log("Network:  unavailable");
+}
