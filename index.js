@@ -5,10 +5,9 @@ const domain = process.argv[2];
 if (!domain) {
   console.log("Usage: whodis <domain>")
   process.exit(1)
-} else {
-  console.log("Checking " + domain);
-
 }
+
+console.log("Checking " + domain);
 
 let ips;
 try {
@@ -22,15 +21,27 @@ console.log("IP: " + ips[0]);
 
 const start = performance.now();
 
-const response = await fetch("https://" + domain);
+let response;
+try {
+  response = await fetch("https://" + domain);
+} catch {
+  console.error(domain + " not responding")
+  process.exit(1);
+}
+
 
 const end = performance.now();
 const endRounded = Math.round(end - start);
 
 console.log("Response: " + endRounded + "ms");
 
-const ipResponse = await fetch("https://ipinfo.io/" + ips[0] + "/json");
-const ipInfo = await ipResponse.json();
+let ipResponse;
+try {
+  ipResponse = await fetch("https://ipinfo.io/" + ips[0] + "/json");
+  ipInfo = await ipResponse.json();
+} catch {
+  console.error("Failed to fetch ipinfo of " + domain)
+}
 
 const platforms = [
   { header: "x-vercel-id", name: "Vercel" },
