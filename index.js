@@ -1,6 +1,6 @@
 import dns from "node:dns/promises";
 
-const gray = "\x1b[38;2;235;235;235m";
+const gray = "\x1b[38;2;200;200;200m";
 const bold = "\x1b[1m";
 const value = "\x1b[38;2;96;165;250m";
 const reset = "\x1b[0m";
