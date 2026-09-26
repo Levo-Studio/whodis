@@ -1,9 +1,16 @@
 import dns from "node:dns/promises";
 
+// ---------- Colors ----------
+
 const gray = "\x1b[38;2;200;200;200m";
 const bold = "\x1b[1m";
 const value = "\x1b[38;2;96;165;250m";
 const reset = "\x1b[0m";
+
+const from = [91, 227, 139];  // #5BE38B
+const to = [59, 130, 246];    // #3B82F6
+
+// ---------- Logo-Symbol ----------
 
 const logo = [
   "██╗    ██╗██╗  ██╗ ██████╗ ██████╗ ██╗███████╗",
@@ -14,6 +21,8 @@ const logo = [
   " ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝",
 ];
 
+// ---------- Domain-Check ----------
+
 const domain = process.argv[2];
 
 if (!domain) {
@@ -21,8 +30,7 @@ if (!domain) {
   process.exit(1)
 }
 
-const from = [91, 227, 139];  // #5BE38B
-const to = [59, 130, 246];    // #3B82F6
+// ---------- Logo ----------
 
 console.log();
 let i = 0;
@@ -37,6 +45,8 @@ for (const line of logo) {
 }
 console.log();
 
+// ---------- 1. DNS ----------
+
 let ips;
 try {
   ips = await dns.resolve4(domain);
@@ -44,6 +54,8 @@ try {
   console.log("Domain not found: " + domain);
   process.exit(1);
 }
+
+// ---------- 2. Website ----------
 
 const start = performance.now();
 
@@ -58,12 +70,16 @@ try {
 const end = performance.now();
 const endRounded = Math.round(end - start);
 
+// ---------- 3. Network ----------
+
 let ipInfo = {};
 let ipResponse;
 try {
   ipResponse = await fetch("https://ipinfo.io/" + ips[0] + "/json");
   ipInfo = await ipResponse.json();
-} catch {}
+} catch { }
+
+// ---------- 4. Platform ----------
 
 const platforms = [
   { header: "x-vercel-id", name: "Vercel" },
@@ -113,6 +129,8 @@ if (headerMatch) {
 } else {
   platform = "unknown";
 }
+
+// ---------- Output ----------
 
 console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + "\n");
 console.log("  " + gray + "Response" + reset + "  " + bold + value + endRounded + "ms" + reset + "\n");
