@@ -2,8 +2,7 @@ import dns from "node:dns/promises";
 
 import { gray, bold, value, reset, red, from, to } from "./src/colors.js";
 import { printLogo } from "./src/programs/logo-display.js";
-
-// ---------- Domain-Check ----------
+import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 
 const domain = process.argv[2];
 
@@ -14,24 +13,7 @@ if (!domain) {
 
 printLogo();
 
-// ---------- Spinner ----------
-
-const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
-const totalSteps = 4;
-let frame = 0;
-
-let status = "Checking " + domain
-
-const spinner = setInterval(() => {
-  process.stdout.write("\r" + frames[frame % frames.length] + " " + status);
-  frame++;
-}, 80);
-
-function stopSpinner() {
-  clearInterval(spinner);
-  process.stdout.write("\r\x1b[2K");
-}
-
+printSpinner(domain);
 
 // ---------- 1. DNS ----------
 
