@@ -6,6 +6,7 @@ const gray = "\x1b[38;2;200;200;200m";
 const bold = "\x1b[1m";
 const value = "\x1b[38;2;96;165;250m";
 const reset = "\x1b[0m";
+const red = "\x1b[38;2;248;113;113m";
 
 const from = [91, 227, 139];  // #5BE38B
 const to = [59, 130, 246];    // #3B82F6
@@ -45,13 +46,33 @@ for (const line of logo) {
 }
 console.log();
 
+// ---------- Spinner ----------
+
+const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+const totalSteps = 4;
+let frame = 0;
+
+let status = "Checking " + domain
+
+const spinner = setInterval(() => {
+  process.stdout.write("\r" + frames[frame % frames.length] + " " + status);
+  frame++;
+}, 80);
+
+function stopSpinner() {
+  clearInterval(spinner);
+  process.stdout.write("\r\x1b[2K");
+}
+
+
 // ---------- 1. DNS ----------
 
 let ips;
 try {
   ips = await dns.resolve4(domain);
 } catch {
-  console.log("Domain not found: " + domain);
+  stopSpinner();
+  console.log("  " + red + "✗" + reset + " " + gray + "Domain not found: " + reset + bold + value + domain + reset + "\n");
   process.exit(1);
 }
 
@@ -63,7 +84,8 @@ let response;
 try {
   response = await fetch("https://" + domain, { signal: AbortSignal.timeout(5000) });
 } catch {
-  console.error(domain + " not responding")
+  stopSpinner();
+  console.log("  " + red + "✗" + reset + " " + gray + "Not responding: " + reset + bold + value + domain + reset + "\n");
   process.exit(1);
 }
 
@@ -132,6 +154,8 @@ if (headerMatch) {
 
 // ---------- Output ----------
 
+stopSpinner();
+
 console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + "\n");
 console.log("  " + gray + "Response" + reset + "  " + bold + value + endRounded + "ms" + reset + "\n");
 console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + "\n");
@@ -141,3 +165,5 @@ if (ipInfo.org) {
 } else {
   console.log("  " + gray + "Network" + reset + "   " + bold + value + "unavailable" + reset + "\n");
 }
+
+process.exit(1);
