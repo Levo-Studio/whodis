@@ -1,19 +1,18 @@
 {
-  "name": "whodis",
-  "version": "1.0.0",
+  "name": "whodiskit",
+  "version": "0.1.0",
   "description": "Ask a domain who it is. It usually answers.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "type": "module",
+  "bin": { "whodis": "index.js" },
+  "files": ["index.js"],
+  "engines": { "node": ">=18" },
+  "keywords": ["cli", "dns", "domain", "hosting", "whois", "network"],
+  "author": "Julius Grimm",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Levo-Studio/whodis.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/Levo-Studio/whodis/issues"
   },

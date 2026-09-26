@@ -1,7 +1,14 @@
 import dns from "node:dns/promises";
 
 const domain = process.argv[2];
-console.log("Checking " + domain);
+
+if (!domain) {
+  console.log("Usage: whodis <domain>")
+  process.exit(1)
+} else {
+  console.log("Checking " + domain);
+
+}
 
 let ips;
 try {
