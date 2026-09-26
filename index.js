@@ -1,15 +1,6 @@
 import dns from "node:dns/promises";
 
-// ---------- Colors ----------
-
-const gray = "\x1b[38;2;200;200;200m";
-const bold = "\x1b[1m";
-const value = "\x1b[38;2;96;165;250m";
-const reset = "\x1b[0m";
-const red = "\x1b[38;2;248;113;113m";
-
-const from = [91, 227, 139];  // #5BE38B
-const to = [59, 130, 246];    // #3B82F6
+import { gray, bold, value, reset, red, from, to } from "./src/colors.js";
 
 // ---------- Logo-Symbol ----------
 
