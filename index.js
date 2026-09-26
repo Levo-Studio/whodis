@@ -3,6 +3,7 @@ import dns from "node:dns/promises";
 import { gray, bold, value, reset, red, from, to } from "./src/colors.js";
 import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
+import { platforms, networks } from "./src/platforms.js";
 
 const domain = process.argv[2];
 
@@ -57,41 +58,6 @@ try {
 } catch { }
 
 // ---------- 4. Platform ----------
-
-const platforms = [
-  { header: "x-vercel-id", name: "Vercel" },
-  { header: "x-nf-request-id", name: "Netlify" },
-  { header: "x-render-origin-server", name: "Render" },
-  { header: "fly-request-id", name: "Fly.io" },
-  { header: "x-railway-edge", name: "Railway" },
-  { header: "x-github-request-id", name: "GitHub" },
-  { header: "x-shopid", name: "Shopify" },
-  { header: "x-wix-request-id", name: "Wix" },
-  { header: "x-azure-ref", name: "Azure" },
-  { header: "x-amz-cf-id", name: "AWS CloudFront" },
-  { header: "cdn-pullzone", name: "Bunny CDN" },
-  { header: "x-akamai-transformed", name: "Akamai" },
-  { header: "cf-ray", name: "Cloudflare" },
-  { header: "x-served-by", name: "Fastly" },
-];
-
-const networks = [
-  { org: "amazon", name: "AWS" },
-  { org: "google", name: "Google" },
-  { org: "microsoft", name: "Azure" },
-  { org: "hetzner", name: "Hetzner" },
-  { org: "digitalocean", name: "DigitalOcean" },
-  { org: "ovh", name: "OVHcloud" },
-  { org: "oracle", name: "Oracle Cloud" },
-  { org: "akamai", name: "Akamai / Linode" },
-  { org: "ionos", name: "IONOS" },
-  { org: "strato", name: "Strato" },
-  { org: "netcup", name: "netcup" },
-  { org: "scaleway", name: "Scaleway" },
-  { org: "constant company", name: "Vultr" },
-  { org: "cloudflare", name: "Cloudflare" },
-  { org: "fastly", name: "Fastly" },
-];
 
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
 
