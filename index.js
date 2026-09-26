@@ -1,11 +1,41 @@
 import dns from "node:dns/promises";
 
+const gray = "\x1b[38;2;235;235;235m";
+const bold = "\x1b[1m";
+const value = "\x1b[38;2;96;165;250m";
+const reset = "\x1b[0m";
+
+const logo = [
+  "██╗    ██╗██╗  ██╗ ██████╗ ██████╗ ██╗███████╗",
+  "██║    ██║██║  ██║██╔═══██╗██╔══██╗██║██╔════╝",
+  "██║ █╗ ██║███████║██║   ██║██║  ██║██║███████╗",
+  "██║███╗██║██╔══██║██║   ██║██║  ██║██║╚════██║",
+  "╚███╔███╔╝██║  ██║╚██████╔╝██████╔╝██║███████║",
+  " ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝",
+];
+
 const domain = process.argv[2];
 
 if (!domain) {
   console.log("Usage: whodis <domain>")
   process.exit(1)
 }
+
+const from = [91, 227, 139];  // #5BE38B
+const to = [59, 130, 246];    // #3B82F6
+
+console.log();
+let i = 0;
+for (const line of logo) {
+  const t = i / (logo.length - 1);
+  const r = Math.round(from[0] + (to[0] - from[0]) * t);
+  const g = Math.round(from[1] + (to[1] - from[1]) * t);
+  const b = Math.round(from[2] + (to[2] - from[2]) * t);
+
+  console.log("\x1b[38;2;" + r + ";" + g + ";" + b + "m" + line + "\x1b[0m");
+  i++;
+}
+console.log();
 
 let ips;
 try {
@@ -84,12 +114,12 @@ if (headerMatch) {
   platform = "unknown";
 }
 
-console.log("IP:       " + ips[0]);
-console.log("Response: " + endRounded + "ms");
-console.log("Platform: " + platform);
+console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + "\n");
+console.log("  " + gray + "Response" + reset + "  " + bold + value + endRounded + "ms" + reset + "\n");
+console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + "\n");
 
 if (ipInfo.org) {
-  console.log("Network:  " + orgName + " · " + ipInfo.city + ", " + ipInfo.country);
+  console.log("  " + gray + "Network" + reset + "   " + bold + value + orgName + " · " + ipInfo.city + ", " + ipInfo.country + reset + "\n");
 } else {
-  console.log("Network:  unavailable");
+  console.log("  " + gray + "Network" + reset + "   " + bold + value + "unavailable" + reset + "\n");
 }
