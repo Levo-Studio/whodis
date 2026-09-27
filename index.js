@@ -5,14 +5,17 @@ import { getIps } from "./src/programs/dns.js";
 import { checkWebsite } from "./src/programs/website.js";
 import { getNetworkInfo } from "./src/programs/network.js";
 import { printError, printResult, printUsage } from "./src/programs/output.js";
+import { normalizeDomain } from "./src/programs/domain.js";
 
-const domain = process.argv[2];
+const input = process.argv[2];
 
-if (!domain) {
+if (!input) {
   printLogo();
   printUsage();
   process.exit(1);
 }
+
+const domain = normalizeDomain(input);
 
 printLogo();
 printSpinner(domain);
