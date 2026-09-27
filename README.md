@@ -4,9 +4,16 @@
 
 <p align="center">Ask a domain who it is. It usually answers.</p>
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Levo-Studio/whodis/main/assets/example.svg?sanitize=true" alt="Output of whodis google.com" width="443">
-</p>
+```
+$ whodis google.com
+
+  Domain    google.com
+  Redirect  → www.google.com
+  IP        142.251.20.100 (+5 more)
+  Response  361ms
+  Platform  Google
+  Network   Google LLC · Frankfurt am Main, DE
+```
 
 ## What it does
 
