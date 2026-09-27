@@ -20,13 +20,15 @@ const domain = normalizeDomain(input);
 printLogo();
 printSpinner(domain);
 
-const ips = await getIps(domain);
+const dnsResult = await getIps(domain);
 
-if (!ips) {
+if (!dnsResult) {
   stopSpinner();
   printError("Domain not found", domain);
   process.exit(1);
 }
+
+const { ips, host } = dnsResult;
 
 const website = await checkWebsite(domain);
 
