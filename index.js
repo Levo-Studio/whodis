@@ -32,7 +32,7 @@ const { ips } = dnsResult;
 
 const connection = await connect(domain);
 
-if (!connection) {
+if (!connection.response) {
   stopSpinner();
   printError("Not responding", domain);
   process.exit(1);
