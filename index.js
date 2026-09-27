@@ -37,7 +37,7 @@ if (!connection.response) {
   if (connection.certificateError) {
     printError("SSL " + connection.certificateError, domain);
   } else {
-    printError("Not responding", domain);
+    printError("Not responding", domain, " (tried https, http, www)");
   }
   process.exit(1);
 }

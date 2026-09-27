@@ -5,8 +5,8 @@ export function printUsage() {
   console.log("  " + gray + "Example" + reset + "   " + bold + value + "whodis google.com" + reset + "\n");
 }
 
-export function printError(message, domain) {
-  console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + "\n");
+export function printError(message, domain, hint = "") {
+  console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }
 
 export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
