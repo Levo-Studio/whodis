@@ -1,9 +1,10 @@
 let spinner;
+
 export function printSpinner(domain) {
   const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
   let frame = 0;
 
-  let status = "Checking " + domain
+  const status = "Checking " + domain;
 
   spinner = setInterval(() => {
     process.stdout.write("\r" + frames[frame % frames.length] + " " + status);

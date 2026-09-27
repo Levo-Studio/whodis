@@ -11,7 +11,7 @@ const domain = process.argv[2];
 if (!domain) {
   printLogo();
   printUsage();
-  process.exit(1)
+  process.exit(1);
 }
 
 printLogo();
