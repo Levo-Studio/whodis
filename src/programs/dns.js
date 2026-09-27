@@ -7,7 +7,6 @@ export async function getIps(domain) {
       const ips = await dns.resolve4(host);
       return { ips, host };
     } catch {
-      // not found, try the next variant
     }
   }
 
