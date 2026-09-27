@@ -32,13 +32,17 @@ const { ips } = dnsResult;
 
 const connection = await connect(domain);
 
-if (!connection) {
+if (!connection.response) {
   stopSpinner();
-  printError("Not responding", domain);
+  if (connection.certificateError) {
+    printError("SSL " + connection.certificateError, domain);
+  } else {
+    printError("Not responding", domain);
+  }
   process.exit(1);
 }
 
-const { response, responseTime } = connection;
+const { response, responseTime, certificateError } = connection;
 
 const ipInfo = await getNetworkInfo(ips[0]);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
@@ -46,6 +50,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult(domain, ips, responseTime, platform, ipInfo, orgName);
+printResult(domain, ips, responseTime, platform, ipInfo, orgName, certificateError);
 
 process.exit(0);
