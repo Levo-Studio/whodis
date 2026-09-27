@@ -2,7 +2,7 @@ import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { detectPlatform } from "./src/programs/platform.js";
 import { getIps } from "./src/programs/dns.js";
-import { checkWebsite } from "./src/programs/website.js";
+import { connect } from "./src/programs/connect.js";
 import { getNetworkInfo } from "./src/programs/network.js";
 import { printError, printResult, printUsage } from "./src/programs/output.js";
 import { normalizeDomain } from "./src/programs/domain.js";
@@ -28,17 +28,17 @@ if (!dnsResult) {
   process.exit(1);
 }
 
-const { ips, host } = dnsResult;
+const { ips } = dnsResult;
 
-const website = await checkWebsite(domain);
+const connection = await connect(domain);
 
-if (!website) {
+if (!connection) {
   stopSpinner();
   printError("Not responding", domain);
   process.exit(1);
 }
 
-const { response, time } = website;
+const { response, responseTime } = connection;
 
 const ipInfo = await getNetworkInfo(ips[0]);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
@@ -46,6 +46,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult(domain, ips, time, platform, ipInfo, orgName);
+printResult(domain, ips, responseTime, platform, ipInfo, orgName);
 
 process.exit(0);
