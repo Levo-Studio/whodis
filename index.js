@@ -2,38 +2,51 @@ import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { detectPlatform } from "./src/programs/platform.js";
 import { getIps } from "./src/programs/dns.js";
-import { checkWebsite } from "./src/programs/website.js";
+import { connect } from "./src/programs/connect.js";
 import { getNetworkInfo } from "./src/programs/network.js";
 import { printError, printResult, printUsage } from "./src/programs/output.js";
+import { normalizeDomain } from "./src/programs/domain.js";
 
-const domain = process.argv[2];
+const input = process.argv[2];
 
-if (!domain) {
+if (!input) {
   printLogo();
   printUsage();
   process.exit(1);
 }
 
+const domain = normalizeDomain(input);
+
 printLogo();
 printSpinner(domain);
 
-const ips = await getIps(domain);
+const dnsResult = await getIps(domain);
 
-if (!ips) {
+if (!dnsResult) {
   stopSpinner();
   printError("Domain not found", domain);
   process.exit(1);
 }
 
-const website = await checkWebsite(domain);
+const { ips } = dnsResult;
 
-if (!website) {
+const connection = await connect(domain);
+
+if (!connection.response) {
   stopSpinner();
-  printError("Not responding", domain);
+  if (connection.certificateError) {
+    printError("SSL " + connection.certificateError, domain);
+  } else {
+    printError("Not responding", domain, " (tried https, http, www)");
+  }
   process.exit(1);
 }
 
-const { response, time } = website;
+const { response, url, responseTime, certificateError } = connection;
+
+const landed = new URL(url);
+const redirect = landed.hostname !== domain ? landed.hostname : null;
+const insecure = landed.protocol === "http:";
 
 const ipInfo = await getNetworkInfo(ips[0]);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
@@ -41,6 +54,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult(domain, ips, time, platform, ipInfo, orgName);
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError });
 
 process.exit(0);
