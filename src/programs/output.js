@@ -9,13 +9,18 @@ export function printError(message, domain) {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + "\n");
 }
 
-export function printResult({ domain, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
+export function printResult({ domain, redirect, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
   }
 
   console.log("  " + gray + "Domain" + reset + "    " + bold + value + domain + reset + "\n");
+
+  if (redirect) {
+    console.log("  " + gray + "Redirect" + reset + "  " + bold + value + "→ " + redirect + reset + "\n");
+  }
+
   console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + gray + extra + reset + "\n");
   console.log("  " + gray + "Response" + reset + "  " + bold + value + responseTime + "ms" + reset + "\n");
 
