@@ -9,7 +9,7 @@ export function printError(message, domain) {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + "\n");
 }
 
-export function printResult(domain, ips, responseTime, platform, ipInfo, orgName, certificateError) {
+export function printResult({ domain, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";

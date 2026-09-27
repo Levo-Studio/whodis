@@ -50,6 +50,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult(domain, ips, responseTime, platform, ipInfo, orgName, certificateError);
+printResult({ domain, ips, responseTime, platform, ipInfo, orgName, certificateError });
 
 process.exit(0);
