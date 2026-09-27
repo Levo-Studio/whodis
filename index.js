@@ -3,6 +3,7 @@ import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { platforms, networks } from "./src/platforms.js";
 import { getIps } from "./src/programs/dns.js";
+import { checkWebsite } from "./src/programs/website.js";
 
 const domain = process.argv[2];
 
@@ -31,19 +32,15 @@ if (ips.length > 1) {
 
 // ---------- 2. Website ----------
 
-const start = performance.now();
+const website = await checkWebsite(domain);
 
-let response;
-try {
-  response = await fetch("https://" + domain, { signal: AbortSignal.timeout(5000) });
-} catch {
+if (!website) {
   stopSpinner();
   console.log("  " + red + "✗" + reset + " " + gray + "Not responding: " + reset + bold + value + domain + reset + "\n");
   process.exit(1);
 }
 
-const end = performance.now();
-const endRounded = Math.round(end - start);
+const { response, time } = website
 
 // ---------- 3. Network ----------
 
@@ -76,7 +73,7 @@ stopSpinner();
 
 console.log("  " + gray + "Domain:" + reset + "   " + bold + value + domain + reset + "\n");
 console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + gray + extra + reset + "\n");
-console.log("  " + gray + "Response" + reset + "  " + bold + value + endRounded + "ms" + reset + "\n");
+console.log("  " + gray + "Response" + reset + "  " + bold + value + time + "ms" + reset + "\n");
 console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + "\n");
 
 if (ipInfo.org) {
