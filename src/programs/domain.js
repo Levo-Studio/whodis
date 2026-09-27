@@ -18,3 +18,7 @@ export function normalizeDomain(input) {
 
   return hostname;
 }
+
+export function wwwVariant(domain) {
+  return domain.startsWith("www.") ? domain.slice(4) : "www." + domain;
+}
