@@ -22,6 +22,12 @@ if (args.help) {
   process.exit(0);
 }
 
+if (args.unknown.length > 0) {
+  printLogo();
+  printError("Unknown option", args.unknown[0], " (see whodis --help)");
+  process.exit(1);
+}
+
 if (!args.domain) {
   printLogo();
   printHelp();
