@@ -4,6 +4,7 @@ import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { platforms, networks } from "./src/platforms.js";
 import { getIps } from "./src/programs/dns.js";
 import { checkWebsite } from "./src/programs/website.js";
+import { getNetworkInfo } from "./src/programs/network.js";
 
 const domain = process.argv[2];
 
@@ -40,16 +41,11 @@ if (!website) {
   process.exit(1);
 }
 
-const { response, time } = website
+const { response, time } = website;
 
 // ---------- 3. Network ----------
 
-let ipInfo = {};
-let ipResponse;
-try {
-  ipResponse = await fetch("https://ipinfo.io/" + ips[0] + "/json");
-  ipInfo = await ipResponse.json();
-} catch { }
+const ipInfo = await getNetworkInfo(ips[0]);
 
 // ---------- 4. Platform ----------
 
