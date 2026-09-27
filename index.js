@@ -42,7 +42,10 @@ if (!connection.response) {
   process.exit(1);
 }
 
-const { response, responseTime, certificateError } = connection;
+const { response, url, responseTime, certificateError } = connection;
+
+const landedHost = new URL(url).hostname;
+const redirect = landedHost !== domain ? landedHost : null;
 
 const ipInfo = await getNetworkInfo(ips[0]);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
@@ -50,6 +53,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult(domain, ips, responseTime, platform, ipInfo, orgName, certificateError);
+printResult({ domain, redirect, ips, responseTime, platform, ipInfo, orgName, certificateError });
 
 process.exit(0);
