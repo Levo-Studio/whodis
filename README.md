@@ -1,16 +1,16 @@
+# whodis
+
+Ask a domain who it is. It usually answers.
+
 ```
+$ whodis google.com
+
 ██╗    ██╗██╗  ██╗ ██████╗ ██████╗ ██╗███████╗
 ██║    ██║██║  ██║██╔═══██╗██╔══██╗██║██╔════╝
 ██║ █╗ ██║███████║██║   ██║██║  ██║██║███████╗
 ██║███╗██║██╔══██║██║   ██║██║  ██║██║╚════██║
 ╚███╔███╔╝██║  ██║╚██████╔╝██████╔╝██║███████║
  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
-```
-
-Ask a domain who it is. It usually answers.
-
-```
-$ whodis google.com
 
   Domain    google.com
   Redirect  → www.google.com
