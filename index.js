@@ -1,7 +1,7 @@
 import { gray, bold, value, reset, red } from "./src/colors.js";
 import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
-import { platforms, networks } from "./src/platforms.js";
+import { detectPlatform } from "./src/programs/platform.js";
 import { getIps } from "./src/programs/dns.js";
 import { checkWebsite } from "./src/programs/website.js";
 import { getNetworkInfo } from "./src/programs/network.js";
@@ -51,17 +51,7 @@ const ipInfo = await getNetworkInfo(ips[0]);
 
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
 
-const headerMatch = platforms.find((p) => response.headers.get(p.header));
-const networkMatch = networks.find((n) => orgName.toLowerCase().includes(n.org));
-
-let platform;
-if (headerMatch) {
-  platform = headerMatch.name;
-} else if (networkMatch) {
-  platform = networkMatch.name;
-} else {
-  platform = "unknown";
-}
+const platform = detectPlatform(response, orgName);
 
 // ---------- Output ----------
 
