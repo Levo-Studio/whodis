@@ -1,7 +1,6 @@
 let spinner;
 export function printSpinner(domain) {
   const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
-  const totalSteps = 4;
   let frame = 0;
 
   let status = "Checking " + domain

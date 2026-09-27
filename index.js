@@ -1,6 +1,6 @@
 import dns from "node:dns/promises";
 
-import { gray, bold, value, reset, red, from, to } from "./src/colors.js";
+import { gray, bold, value, reset, red } from "./src/colors.js";
 import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { platforms, networks } from "./src/platforms.js";
@@ -13,7 +13,6 @@ if (!domain) {
 }
 
 printLogo();
-
 printSpinner(domain);
 
 // ---------- 1. DNS ----------
