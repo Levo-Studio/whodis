@@ -44,8 +44,9 @@ if (!connection.response) {
 
 const { response, url, responseTime, certificateError } = connection;
 
-const landedHost = new URL(url).hostname;
-const redirect = landedHost !== domain ? landedHost : null;
+const landed = new URL(url);
+const redirect = landed.hostname !== domain ? landed.hostname : null;
+const insecure = landed.protocol === "http:";
 
 const ipInfo = await getNetworkInfo(ips[0]);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
@@ -53,6 +54,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult({ domain, redirect, ips, responseTime, platform, ipInfo, orgName, certificateError });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError });
 
 process.exit(0);

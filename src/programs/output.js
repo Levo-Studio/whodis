@@ -9,7 +9,7 @@ export function printError(message, domain) {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + "\n");
 }
 
-export function printResult({ domain, redirect, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
+export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
@@ -23,6 +23,10 @@ export function printResult({ domain, redirect, ips, responseTime, platform, ipI
 
   console.log("  " + gray + "IP" + reset + "        " + bold + value + ips[0] + reset + gray + extra + reset + "\n");
   console.log("  " + gray + "Response" + reset + "  " + bold + value + responseTime + "ms" + reset + "\n");
+
+  if (insecure) {
+    console.log("  " + gray + "Protocol" + reset + "  " + bold + red + "HTTP (no SSL)" + reset + "\n");
+  }
 
   if (certificateError) {
     console.log("  " + gray + "SSL" + reset + "       " + bold + red + certificateError + reset + "\n");
