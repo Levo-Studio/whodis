@@ -1,17 +1,12 @@
-# whodis
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Levo-Studio/whodis/main/assets/logo.svg?sanitize=true" alt="whodis" width="400">
+</p>
 
-Ask a domain who it is. It usually answers.
+<p align="center">Ask a domain who it is. It usually answers.</p>
 
-```
-$ whodis google.com
-
-  Domain    google.com
-  Redirect  → www.google.com
-  IP        142.251.20.100 (+5 more)
-  Response  361ms
-  Platform  Google
-  Network   Google LLC · Frankfurt am Main, DE
-```
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Levo-Studio/whodis/main/assets/example.svg?sanitize=true" alt="Output of whodis google.com" width="443">
+</p>
 
 ## What it does
 

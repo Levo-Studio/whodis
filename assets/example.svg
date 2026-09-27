@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="443" height="398" viewBox="0 0 443 398" role="img" aria-label="whodis">
+<style>text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace;font-size:14px;white-space:pre}</style>
+<rect width="443" height="398" rx="10" fill="#16181d"/>
+<circle cx="20" cy="18" r="6" fill="#ff5f57"/><circle cx="40" cy="18" r="6" fill="#febc2e"/><circle cx="60" cy="18" r="6" fill="#28c840"/>
+<text x="24.0" y="53" fill="rgb(91,227,139)" font-weight="bold" textLength="16.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">$ </text>
+<text x="40.8" y="53" fill="rgb(230,230,230)" textLength="142.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">whodis google.com</text>
+<text x="24.0" y="87" fill="rgb(91,227,139)" textLength="386.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">██╗    ██╗██╗  ██╗ ██████╗ ██████╗ ██╗███████╗</text>
+<text x="24.0" y="104" fill="rgb(85,208,160)" textLength="386.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">██║    ██║██║  ██║██╔═══██╗██╔══██╗██║██╔════╝</text>
+<text x="24.0" y="121" fill="rgb(78,188,182)" textLength="386.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">██║ █╗ ██║███████║██║   ██║██║  ██║██║███████╗</text>
+<text x="24.0" y="138" fill="rgb(72,169,203)" textLength="386.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">██║███╗██║██╔══██║██║   ██║██║  ██║██║╚════██║</text>
+<text x="24.0" y="155" fill="rgb(65,149,225)" textLength="386.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">╚███╔███╔╝██║  ██║╚██████╔╝██████╔╝██║███████║</text>
+<text x="24.0" y="172" fill="rgb(59,130,246)" textLength="386.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve"> ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝</text>
+<text x="40.8" y="206" fill="rgb(200,200,200)" textLength="50.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Domain</text>
+<text x="124.8" y="206" fill="rgb(96,165,250)" font-weight="bold" textLength="84.0" lengthAdjust="spacingAndGlyphs" xml:space="preserve">google.com</text>
+<text x="40.8" y="240" fill="rgb(200,200,200)" textLength="67.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Redirect</text>
+<text x="124.8" y="240" fill="rgb(96,165,250)" font-weight="bold" textLength="134.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">→ www.google.com</text>
+<text x="40.8" y="274" fill="rgb(200,200,200)" textLength="16.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">IP</text>
+<text x="124.8" y="274" fill="rgb(96,165,250)" font-weight="bold" textLength="117.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">142.251.14.102</text>
+<text x="242.4" y="274" fill="rgb(200,200,200)" textLength="84.0" lengthAdjust="spacingAndGlyphs" xml:space="preserve"> (+5 more)</text>
+<text x="40.8" y="308" fill="rgb(200,200,200)" textLength="67.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Response</text>
+<text x="124.8" y="308" fill="rgb(96,165,250)" font-weight="bold" textLength="42.0" lengthAdjust="spacingAndGlyphs" xml:space="preserve">366ms</text>
+<text x="40.8" y="342" fill="rgb(200,200,200)" textLength="67.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Platform</text>
+<text x="124.8" y="342" fill="rgb(96,165,250)" font-weight="bold" textLength="50.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Google</text>
+<text x="40.8" y="376" fill="rgb(200,200,200)" textLength="58.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Network</text>
+<text x="124.8" y="376" fill="rgb(96,165,250)" font-weight="bold" textLength="285.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Google LLC · Frankfurt am Main, DE</text>
+</svg>
