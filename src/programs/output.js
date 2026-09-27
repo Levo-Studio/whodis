@@ -7,6 +7,10 @@ export function printHelp() {
   console.log("  " + gray + "Example" + reset + "   " + bold + value + "whodis google.com" + reset + "\n");
 }
 
+export function printVersion(version) {
+  console.log("  " + gray + "Version" + reset + "   " + bold + value + version + reset + "\n");
+}
+
 export function printError(message, domain, hint = "") {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }

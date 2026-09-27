@@ -4,7 +4,7 @@ import { detectPlatform } from "./src/programs/platform.js";
 import { getIps } from "./src/programs/dns.js";
 import { connect } from "./src/programs/connect.js";
 import { getNetworkInfo } from "./src/programs/network.js";
-import { printError, printResult, printHelp } from "./src/programs/output.js";
+import { printError, printResult, printHelp, printVersion } from "./src/programs/output.js";
 import { normalizeDomain } from "./src/programs/domain.js";
 import { parseArgs } from "./src/programs/args.js";
 import { getVersion } from "./src/programs/version.js";
@@ -12,7 +12,8 @@ import { getVersion } from "./src/programs/version.js";
 const args = parseArgs(process.argv.slice(2));
 
 if (args.version) {
-  console.log(getVersion());
+  printLogo();
+  printVersion(getVersion());
   process.exit(0);
 }
 
