@@ -1,8 +1,14 @@
 import { gray, bold, value, reset, red } from "../colors.js";
 
-export function printUsage() {
-  console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain>" + reset + "\n");
+export function printHelp() {
+  console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
+  console.log("  " + gray + "Options" + reset + "   " + bold + value + "--help, -h" + reset + "       " + gray + "show this help" + reset);
+  console.log("            " + bold + value + "--version, -v" + reset + "    " + gray + "show the version" + reset + "\n");
   console.log("  " + gray + "Example" + reset + "   " + bold + value + "whodis google.com" + reset + "\n");
+}
+
+export function printVersion(version) {
+  console.log("  " + gray + "Version" + reset + "   " + bold + value + version + reset + "\n");
 }
 
 export function printError(message, domain, hint = "") {

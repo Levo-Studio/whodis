@@ -4,18 +4,38 @@ import { detectPlatform } from "./src/programs/platform.js";
 import { getIps } from "./src/programs/dns.js";
 import { connect } from "./src/programs/connect.js";
 import { getNetworkInfo } from "./src/programs/network.js";
-import { printError, printResult, printUsage } from "./src/programs/output.js";
+import { printError, printResult, printHelp, printVersion } from "./src/programs/output.js";
 import { normalizeDomain } from "./src/programs/domain.js";
+import { parseArgs } from "./src/programs/args.js";
+import { getVersion } from "./src/programs/version.js";
 
-const input = process.argv[2];
+const args = parseArgs(process.argv.slice(2));
 
-if (!input) {
+if (args.version) {
   printLogo();
-  printUsage();
+  printVersion(getVersion());
+  process.exit(0);
+}
+
+if (args.help) {
+  printLogo();
+  printHelp();
+  process.exit(0);
+}
+
+if (args.unknown.length > 0) {
+  printLogo();
+  printError("Unknown option", args.unknown[0], " (see whodis --help)");
   process.exit(1);
 }
 
-const domain = normalizeDomain(input);
+if (!args.domain) {
+  printLogo();
+  printHelp();
+  process.exit(1);
+}
+
+const domain = normalizeDomain(args.domain);
 
 printLogo();
 printSpinner(domain);
