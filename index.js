@@ -87,4 +87,4 @@ if (ipInfo.org) {
   console.log("  " + gray + "Network" + reset + "   " + bold + value + "unavailable" + reset + "\n");
 }
 
-process.exit(1);
+process.exit(0);
