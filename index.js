@@ -1,9 +1,8 @@
-import dns from "node:dns/promises";
-
 import { gray, bold, value, reset, red } from "./src/colors.js";
 import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { platforms, networks } from "./src/platforms.js";
+import { getIps } from "./src/programs/dns.js";
 
 const domain = process.argv[2];
 
@@ -17,10 +16,9 @@ printSpinner(domain);
 
 // ---------- 1. DNS ----------
 
-let ips;
-try {
-  ips = await dns.resolve4(domain);
-} catch {
+const ips = await getIps(domain);
+
+if (!ips) {
   stopSpinner();
   console.log("  " + red + "✗" + reset + " " + gray + "Domain not found: " + reset + bold + value + domain + reset + "\n");
   process.exit(1);
