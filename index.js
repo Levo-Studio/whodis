@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { detectPlatform } from "./src/programs/platform.js";
