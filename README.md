@@ -1,8 +1,13 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Levo-Studio/whodis/main/assets/logo.svg?sanitize=true" alt="whodis" width="400">
-</p>
+```
+██╗    ██╗██╗  ██╗ ██████╗ ██████╗ ██╗███████╗
+██║    ██║██║  ██║██╔═══██╗██╔══██╗██║██╔════╝
+██║ █╗ ██║███████║██║   ██║██║  ██║██║███████╗
+██║███╗██║██╔══██║██║   ██║██║  ██║██║╚════██║
+╚███╔███╔╝██║  ██║╚██████╔╝██████╔╝██║███████║
+ ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
+```
 
-<p align="center">Ask a domain who it is. It usually answers.</p>
+Ask a domain who it is. It usually answers.
 
 ```
 $ whodis google.com
