@@ -4,12 +4,13 @@ import { detectPlatform } from "./src/programs/platform.js";
 import { getIps } from "./src/programs/dns.js";
 import { checkWebsite } from "./src/programs/website.js";
 import { getNetworkInfo } from "./src/programs/network.js";
-import { printError, printResult } from "./src/programs/output.js";
+import { printError, printResult, printUsage } from "./src/programs/output.js";
 
 const domain = process.argv[2];
 
 if (!domain) {
-  console.log("Usage: whodis <domain>")
+  printLogo();
+  printUsage();
   process.exit(1)
 }
 

@@ -1,5 +1,10 @@
 import { gray, bold, value, reset, red } from "../colors.js";
 
+export function printUsage() {
+  console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain>" + reset + "\n");
+  console.log("  " + gray + "Example" + reset + "   " + bold + value + "whodis google.com" + reset + "\n");
+}
+
 export function printError(message, domain) {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + "\n");
 }
