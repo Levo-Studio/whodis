@@ -1,4 +1,5 @@
-import { gray, bold, value, reset, red } from "../colors.js";
+import {
+  gray, bold, value, reset, red, green, yellow} from "../colors.js";
 
 export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
@@ -44,5 +45,15 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
     console.log("  " + gray + "Network" + reset + "   " + bold + value + orgName + " · " + ipInfo.city + ", " + ipInfo.country + reset + "\n");
   } else {
     console.log("  " + gray + "Network" + reset + "   " + bold + value + "unavailable" + reset + "\n");
+  }
+}
+
+export function urgencyColor(days) {
+  if (days <= 7) {
+      return red;
+  } else if (days > 30) {
+      return green;
+  } else {
+      return yellow;
   }
 }
