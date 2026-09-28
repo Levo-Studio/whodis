@@ -1,0 +1,17 @@
+export const dnsProviders = [
+  { ns: "cloudflare.com", name: "Cloudflare" },
+  { ns: "awsdns", name: "AWS Route 53" },
+  { ns: "nsone.net", name: "NS1" },
+  { ns: "google.com", name: "Google" },
+  { ns: "domaincontrol.com", name: "GoDaddy" },
+  { ns: "your-server.de", name: "Hetzner" },
+  { ns: "second-ns", name: "Hetzner" },
+  { ns: "ovh.net", name: "OVHcloud" },
+  { ns: "digitalocean.com", name: "DigitalOcean" },
+  { ns: "azure-dns", name: "Azure DNS" },
+  { ns: "vercel-dns.com", name: "Vercel" },
+  { ns: "ui-dns", name: "IONOS" },
+  { ns: "rzone.de", name: "Strato" },
+  { ns: "inwx", name: "INWX" },
+  { ns: "registrar-servers.com", name: "Namecheap" },
+];
