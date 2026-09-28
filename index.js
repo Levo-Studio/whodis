@@ -10,6 +10,7 @@ import { printError, printResult, printHelp, printVersion } from "./src/programs
 import { normalizeDomain } from "./src/programs/domain.js";
 import { parseArgs } from "./src/programs/args.js";
 import { getVersion } from "./src/programs/version.js";
+import { getCertificate } from "./src/programs/ssl.js";
 
 const args = parseArgs(process.argv.slice(2));
 
@@ -69,6 +70,7 @@ const { response, url, responseTime, certificateError } = connection;
 const landed = new URL(url);
 const redirect = landed.hostname !== domain ? landed.hostname : null;
 const insecure = landed.protocol === "http:";
+const certificate = insecure ? null : await getCertificate(landed.hostname);
 
 const ipInfo = await getNetworkInfo(ips[0]);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
@@ -76,6 +78,6 @@ const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate });
 
 process.exit(0);

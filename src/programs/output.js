@@ -1,5 +1,4 @@
-import {
-  gray, bold, value, reset, red, green, yellow} from "../colors.js";
+import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
 
 export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
@@ -16,7 +15,7 @@ export function printError(message, domain, hint = "") {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }
 
-export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError }) {
+export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
@@ -33,6 +32,10 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
 
   if (insecure) {
     console.log("  " + gray + "Protocol" + reset + "  " + bold + red + "HTTP (no SSL)" + reset + "\n");
+  }
+
+  if (certificate) {
+    console.log("  " + gray + "SSL" + reset + "       " + bold + value + certificate.issuer + " · " + urgencyColor(certificate.daysLeft) + certificate.daysLeft + " days left" + reset + "\n");
   }
 
   if (certificateError) {
