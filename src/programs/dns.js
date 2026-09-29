@@ -14,10 +14,15 @@ export async function getIps(domain) {
 }
 
 export async function getNameservers(domain) {
-  try {
-    const nameServer = await dns.resolveNs(domain);
-    return nameServer;
-  } catch {
-    return [];
+  let name = domain;
+
+  while (name.includes(".")) {
+    try {
+      return await dns.resolveNs(name);
+    } catch {
+      name = name.split(".").slice(1).join(".");
+    }
   }
+
+  return [];
 }
