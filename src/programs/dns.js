@@ -12,3 +12,12 @@ export async function getIps(domain) {
 
   return null;
 }
+
+export async function getNameservers(domain) {
+  try {
+    const nameServer = await dns.resolveNs(domain);
+    return nameServer;
+  } catch {
+    return [];
+  }
+}
