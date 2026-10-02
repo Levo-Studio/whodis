@@ -48,7 +48,7 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
 
   let hint = "";
   if (proxied) {
-    hint = " (proxied or hosted)";
+    hint = " (proxied)";
   }
 
   console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + gray + hint + reset + "\n");
