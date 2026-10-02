@@ -87,6 +87,6 @@ const proxy = detectProxy({ ip: ips[0], orgName, response, probe });
 
 stopSpinner();
 
-printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, detailed: args.detailed });
 
 process.exit(0);

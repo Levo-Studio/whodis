@@ -3,7 +3,8 @@ import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
 export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
   console.log("  " + gray + "Options" + reset + "   " + bold + value + "--help, -h" + reset + "       " + gray + "show this help" + reset);
-  console.log("            " + bold + value + "--version, -v" + reset + "    " + gray + "show the version" + reset + "\n");
+  console.log("            " + bold + value + "--version, -v" + reset + "    " + gray + "show the version" + reset);
+  console.log("            " + bold + value + "--detailed, -d" + reset + "   " + gray + "show why a domain counts as proxied" + reset + "\n");
   console.log("  " + gray + "Example" + reset + "   " + bold + value + "whodis google.com" + reset + "\n");
 }
 
@@ -15,7 +16,7 @@ export function printError(message, domain, hint = "") {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }
 
-export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy }) {
+export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, detailed }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
@@ -48,7 +49,10 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
 
   let platformName = platform;
   let hint = "";
-  if (proxy.proxied) {
+  if (proxy.proxied && detailed && proxy.cdn === "Cloudflare") {
+    platformName = proxy.cdn;
+    hint = " (proxied or hosted)";
+  } else if (proxy.proxied) {
     platformName = proxy.cdn;
     hint = " (proxied)";
   } else if (proxy.likely) {
@@ -56,7 +60,15 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
     hint = " (likely proxied)";
   }
 
-  console.log("  " + gray + "Platform" + reset + "  " + bold + value + platformName + reset + gray + hint + reset + "\n");
+  if (detailed && proxy.reasons.length > 0) {
+    console.log("  " + gray + "Platform" + reset + "  " + bold + value + platformName + reset + gray + hint + reset);
+    for (const reason of proxy.reasons) {
+      console.log("            " + green + "✓ " + reset + gray + reason + reset);
+    }
+    console.log("");
+  } else {
+    console.log("  " + gray + "Platform" + reset + "  " + bold + value + platformName + reset + gray + hint + reset + "\n");
+  }
 
   if (ipInfo.org) {
     console.log("  " + gray + "Network" + reset + "   " + bold + value + orgName + " · " + ipInfo.city + ", " + ipInfo.country + reset + "\n");
