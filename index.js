@@ -3,7 +3,7 @@
 import { printLogo } from "./src/programs/logo-display.js";
 import { printSpinner, stopSpinner } from "./src/programs/spinner.js";
 import { detectPlatform } from "./src/programs/platform.js";
-import { getIps } from "./src/programs/dns.js";
+import { getIps, getNameservers } from "./src/programs/dns.js";
 import { connect } from "./src/programs/connect.js";
 import { getNetworkInfo } from "./src/programs/network.js";
 import { printError, printResult, printHelp, printVersion } from "./src/programs/output.js";
@@ -11,6 +11,7 @@ import { normalizeDomain } from "./src/programs/domain.js";
 import { parseArgs } from "./src/programs/args.js";
 import { getVersion } from "./src/programs/version.js";
 import { getCertificate } from "./src/programs/ssl.js";
+import { detectDnsProvider } from "./src/programs/dns-provider.js";
 
 const args = parseArgs(process.argv.slice(2));
 
@@ -73,11 +74,13 @@ const insecure = landed.protocol === "http:";
 const certificate = insecure ? null : await getCertificate(landed.hostname);
 
 const ipInfo = await getNetworkInfo(ips[0]);
+const nameServer = await getNameservers(domain);
+const dnsProvider = detectDnsProvider(nameServer);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
 const platform = detectPlatform(response, orgName);
 
 stopSpinner();
 
-printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider });
 
 process.exit(0);

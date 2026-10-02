@@ -12,3 +12,17 @@ export async function getIps(domain) {
 
   return null;
 }
+
+export async function getNameservers(domain) {
+  let name = domain;
+
+  while (name.includes(".")) {
+    try {
+      return await dns.resolveNs(name);
+    } catch {
+      name = name.split(".").slice(1).join(".");
+    }
+  }
+
+  return [];
+}
