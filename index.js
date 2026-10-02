@@ -79,7 +79,7 @@ const nameServer = await getNameservers(domain);
 const dnsProvider = detectDnsProvider(nameServer);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
 const platform = detectPlatform(response, orgName);
-const proxied = isProxied(response, orgName);
+const proxied = isProxied(response, orgName, ips[0]);
 
 stopSpinner();
 
