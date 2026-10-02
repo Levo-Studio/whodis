@@ -10,9 +10,20 @@ export function detectDnsProvider(nameservers) {
     if (match) {
       names.add(match.name);
     } else {
-      names.add(host.split(".").slice(-2).join("."));
+      names.add(baseDomain(host));
     }
   }
 
   return [...names].join(", ");
+}
+
+const secondLevels = ["co", "com", "net", "org", "gov", "edu", "ac", "ne", "or"];
+
+function baseDomain(host) {
+  const parts = host.split(".");
+  const tld = parts[parts.length - 1];
+  const second = parts[parts.length - 2];
+  const count = parts.length > 2 && tld.length === 2 && secondLevels.includes(second) ? 3 : 2;
+
+  return parts.slice(-count).join(".");
 }
