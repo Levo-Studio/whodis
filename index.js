@@ -12,7 +12,8 @@ import { parseArgs } from "./src/programs/args.js";
 import { getVersion } from "./src/programs/version.js";
 import { getCertificate } from "./src/programs/ssl.js";
 import { detectDnsProvider } from "./src/programs/dns-provider.js";
-import { isProxied } from "./src/programs/proxy.js";
+import { detectProxy } from "./src/programs/proxy.js";
+import { probeIp } from "./src/programs/probe.js";
 
 const args = parseArgs(process.argv.slice(2));
 
@@ -74,15 +75,18 @@ const redirect = landed.hostname !== domain ? landed.hostname : null;
 const insecure = landed.protocol === "http:";
 const certificate = insecure ? null : await getCertificate(landed.hostname);
 
-const ipInfo = await getNetworkInfo(ips[0]);
+const [ipInfo, probe] = await Promise.all([
+  getNetworkInfo(ips[0]),
+  args.detailed ? probeIp(ips[0]) : null,
+]);
 const nameServer = await getNameservers(domain);
 const dnsProvider = detectDnsProvider(nameServer);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
 const platform = detectPlatform(response, orgName);
-const proxied = isProxied(response, orgName, ips[0]);
+const proxy = detectProxy({ ip: ips[0], orgName, response, probe });
 
 stopSpinner();
 
-printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxied });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxied: proxy.proxied });
 
 process.exit(0);
