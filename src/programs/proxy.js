@@ -19,8 +19,12 @@ export function detectProxy({ ip, orgName, response, probe }) {
   };
 }
 
+export function findCdnRange(ip) {
+  return cdnRanges.find((c) => c.ranges.some((r) => inRange(ip, r)));
+}
+
 function checkIp(ip, orgName) {
-  const range = cdnRanges.find((c) => c.ranges.some((r) => inRange(ip, r)));
+  const range = findCdnRange(ip);
   const org = orgName.toLowerCase();
   const network = cdns.find((c) => c.orgs.some((o) => org.includes(o)));
 

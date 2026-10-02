@@ -18,11 +18,25 @@ export async function getNameservers(domain) {
 
   while (name.includes(".")) {
     try {
-      return await dns.resolveNs(name);
+      const nameservers = await dns.resolveNs(name);
+      return { zone: name, nameservers };
     } catch {
       name = name.split(".").slice(1).join(".");
     }
   }
 
-  return [];
+  return { zone: null, nameservers: [] };
+}
+
+export async function getRootRecord(zone) {
+  if (!zone) {
+    return null;
+  }
+
+  try {
+    const ips = await dns.resolve4(zone);
+    return ips[0];
+  } catch {
+    return null;
+  }
 }

@@ -16,7 +16,7 @@ export function printError(message, domain, hint = "") {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }
 
-export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, detailed }) {
+export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, detailed, rootRecord, rootOrigin }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
@@ -75,6 +75,13 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
   } else {
     console.log("  " + gray + "Network" + reset + "   " + bold + value + "unavailable" + reset + "\n");
   }
+
+  let rootHint = "";
+  if (rootOrigin) {
+    rootHint = " (not proxied, likely origin)";
+  }
+
+  console.log("  " + gray + "A record" + reset + "  " + bold + value + (rootRecord ?? "none") + reset + yellow + rootHint + reset + "\n");
 }
 
 export function urgencyColor(days) {
