@@ -12,6 +12,7 @@ import { parseArgs } from "./src/programs/args.js";
 import { getVersion } from "./src/programs/version.js";
 import { getCertificate } from "./src/programs/ssl.js";
 import { detectDnsProvider } from "./src/programs/dns-provider.js";
+import { isProxied } from "./src/programs/proxy.js";
 
 const args = parseArgs(process.argv.slice(2));
 
@@ -78,9 +79,10 @@ const nameServer = await getNameservers(domain);
 const dnsProvider = detectDnsProvider(nameServer);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
 const platform = detectPlatform(response, orgName);
+const proxied = isProxied(response, orgName);
 
 stopSpinner();
 
-printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxied });
 
 process.exit(0);
