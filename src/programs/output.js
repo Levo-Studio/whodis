@@ -47,9 +47,13 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
     console.log("  " + gray + "DNS" + reset + "       " + bold + value + dnsProvider + reset + "\n");
   }
 
+  const hosted = platform !== "unknown" && platform !== proxy.cdn;
+
   let platformName = platform;
   let hint = "";
-  if (proxy.proxied && detailed && proxy.cdn === "Cloudflare") {
+  if ((proxy.proxied || proxy.likely) && hosted) {
+    hint = " (via " + proxy.cdn + ")";
+  } else if (proxy.proxied && detailed && proxy.cdn === "Cloudflare") {
     platformName = proxy.cdn;
     hint = " (proxied or hosted)";
   } else if (proxy.proxied) {
