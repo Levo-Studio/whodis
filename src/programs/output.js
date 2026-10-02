@@ -15,7 +15,7 @@ export function printError(message, domain, hint = "") {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }
 
-export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider }) {
+export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxied }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
@@ -46,7 +46,12 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
     console.log("  " + gray + "DNS" + reset + "       " + bold + value + dnsProvider + reset + "\n");
   }
 
-  console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + "\n");
+  let hint = "";
+  if (proxied) {
+    hint = " (proxied or hosted)";
+  }
+
+  console.log("  " + gray + "Platform" + reset + "  " + bold + value + platform + reset + gray + hint + reset + "\n");
 
   if (ipInfo.org) {
     console.log("  " + gray + "Network" + reset + "   " + bold + value + orgName + " · " + ipInfo.city + ", " + ipInfo.country + reset + "\n");
