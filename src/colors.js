@@ -6,5 +6,5 @@ export const red = "\x1b[38;2;248;113;113m";
 export const green = "\x1b[38;2;74;222;128m";
 export const yellow = "\x1b[38;2;250;204;21m";
 
-export const from = [91, 227, 139];  // #5BE38B
-export const to = [59, 130, 246];    // #3B82F6
+export const from = [91, 227, 139];
+export const to = [59, 130, 246];
