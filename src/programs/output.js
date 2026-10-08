@@ -5,7 +5,7 @@ export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
   console.log("  " + gray + "Options" + reset + "   " + bold + value + "--help, -h" + reset + "       " + gray + "show this help" + reset);
   console.log("            " + bold + value + "--version, -v" + reset + "    " + gray + "show the version" + reset);
-  console.log("            " + bold + value + "--detailed, -d" + reset + "   " + gray + "show why a domain counts as proxied" + reset + "\n");
+  console.log("            " + bold + value + "--detailed, -d" + reset + "   " + gray + "show everything, grouped by section" + reset + "\n");
   console.log("  " + gray + "Example" + reset + "   " + bold + value + "whodis google.com" + reset + "\n");
 }
 
