@@ -1,7 +1,7 @@
 import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
 import { yearsSince } from "./rdap.js";
 
-const indent = "  ";
+const indent = "    ";
 const labelWidth = 12;
 const gap = indent + " ".repeat(labelWidth);
 
@@ -157,7 +157,7 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
 }
 
 function printSection(title) {
-  console.log("  " + bold + gray + title + reset + " " + gray + "─".repeat(44 - title.length) + reset);
+  console.log("  " + bold + gray + title + reset + " " + gray + "─".repeat(48 - title.length) + reset + "\n");
 }
 
 function printLine(label, text, extra = "", below = []) {
