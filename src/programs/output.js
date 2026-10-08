@@ -1,4 +1,5 @@
 import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
+import { yearsSince } from "./rdap.js";
 
 export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
@@ -88,5 +89,97 @@ export function urgencyColor(days) {
     return green;
   } else {
     return yellow;
+  }
+}
+
+export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseTime, server, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, mailProvider, registration, proxy, rootRecord, rootOrigin }) {
+  console.log("  " + bold + value + domain + reset + "\n");
+
+  printSection("HOSTING");
+  printAddresses("IPv4", ips, 3);
+  if (ipv6.length > 0) {
+    printAddresses("IPv6", ipv6, 2);
+  }
+  printLine("Location", ipInfo.city ? ipInfo.city + ", " + ipInfo.country : "unavailable");
+
+  const { name: platformName, hint } = platformLabel(platform, proxy, true);
+  printLine("Platform", platformName, gray + hint);
+  if (proxy.proxied || proxy.likely) {
+    for (const reason of proxy.reasons) {
+      console.log("            " + green + "✓ " + reset + gray + reason + reset);
+    }
+  }
+
+  if (ipInfo.org) {
+    printLine("Network", orgName + " · " + ipInfo.org.split(" ")[0]);
+  } else {
+    printLine("Network", "unavailable");
+  }
+
+  if (rootOrigin) {
+    printLine("Origin", rootRecord, yellow + " (root domain not proxied)");
+  }
+  console.log("");
+
+  printSection("WEBSITE");
+  if (redirect) {
+    printLine("Redirect", "→ " + redirect);
+  }
+  if (insecure) {
+    printLine("Protocol", red + "HTTP (no SSL)");
+  } else {
+    printLine("Protocol", "HTTPS");
+  }
+  printLine("Response", responseTime + "ms" + (server ? " · " + server : ""));
+  if (certificate) {
+    printLine("SSL", certificate.issuer + " · " + urgencyColor(certificate.daysLeft) + certificate.daysLeft + " days left");
+  }
+  if (certificateError) {
+    printLine("SSL", red + certificateError);
+  }
+  console.log("");
+
+  printSection("DNS & MAIL");
+  printLine("DNS", dnsProvider || "unavailable");
+  printLine("Mail", mailProvider || "none");
+  console.log("");
+
+  if (registration) {
+    printSection("DOMAIN");
+    if (registration.registrar) {
+      printLine("Registrar", registration.registrar);
+    }
+    if (registration.since) {
+      printLine("Since", registration.since.slice(0, 4) + " (" + age(yearsSince(registration.since)) + ")");
+    }
+    console.log("");
+  }
+}
+
+function printSection(title) {
+  console.log("  " + bold + gray + title + reset + " " + gray + "─".repeat(44 - title.length) + reset);
+}
+
+function printLine(label, text, extra = "") {
+  console.log("  " + gray + label.padEnd(10) + reset + bold + value + text + reset + extra + reset);
+}
+
+function printAddresses(label, addresses, perRow) {
+  printLine(label, addresses.length + (addresses.length === 1 ? " address" : " addresses"));
+  const width = Math.max(...addresses.map((a) => a.length)) + 4;
+
+  for (let i = 0; i < addresses.length; i += perRow) {
+    const row = addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd();
+    console.log("            " + value + row + reset);
+  }
+}
+
+function age(years) {
+  if (years < 1) {
+    return "less than a year";
+  } else if (years === 1) {
+    return "1 year";
+  } else {
+    return years + " years";
   }
 }
