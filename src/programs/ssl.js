@@ -11,7 +11,7 @@ export function getCertificate(host) {
       const certificate = socket.getPeerCertificate();
       socket.destroy();
       resolve({
-        issuer: certificate.issuer.O,
+        issuer: certificate.issuer?.O ?? certificate.issuer?.CN ?? "unknown issuer",
         daysLeft: daysUntil(certificate.valid_to),
       });
     });
