@@ -2,7 +2,7 @@ import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
 import { yearsSince } from "./rdap.js";
 
 const indent = "  ";
-const labelWidth = 10;
+const labelWidth = 12;
 const gap = indent + " ".repeat(labelWidth);
 
 export function printHelp() {
