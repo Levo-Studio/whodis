@@ -169,7 +169,7 @@ function printAddresses(label, addresses, perRow) {
   const rows = [];
 
   for (let i = 0; i < addresses.length; i += perRow) {
-    rows.push(value + addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd());
+    rows.push(gray + addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd());
   }
 
   printLine(label, addresses.length + (addresses.length === 1 ? " address" : " addresses"), "", rows);
