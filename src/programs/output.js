@@ -107,12 +107,8 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   printLine("Location", ipInfo.city ? ipInfo.city + ", " + ipInfo.country : "unavailable");
 
   const { name: platformName, hint } = platformLabel(platform, proxy, true);
-  printLine("Platform", platformName, gray + hint);
-  if (proxy.proxied || proxy.likely) {
-    for (const reason of proxy.reasons) {
-      console.log(gap + green + "✓ " + reset + gray + reason + reset);
-    }
-  }
+  const reasons = proxy.proxied || proxy.likely ? proxy.reasons.map((reason) => green + "✓ " + reset + gray + reason) : [];
+  printLine("Platform", platformName, gray + hint, reasons);
 
   if (ipInfo.org) {
     printLine("Network", orgName + " · " + ipInfo.org.split(" ")[0]);
@@ -164,18 +160,22 @@ function printSection(title) {
   console.log("  " + bold + gray + title + reset + " " + gray + "─".repeat(44 - title.length) + reset);
 }
 
-function printLine(label, text, extra = "") {
+function printLine(label, text, extra = "", below = []) {
   console.log(indent + gray + label.padEnd(labelWidth) + reset + bold + value + text + reset + extra + reset);
+  for (const line of below) {
+    console.log(gap + line + reset);
+  }
 }
 
 function printAddresses(label, addresses, perRow) {
-  printLine(label, addresses.length + (addresses.length === 1 ? " address" : " addresses"));
   const width = Math.max(...addresses.map((a) => a.length)) + 4;
+  const rows = [];
 
   for (let i = 0; i < addresses.length; i += perRow) {
-    const row = addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd();
-    console.log(gap + value + row + reset);
+    rows.push(value + addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd());
   }
+
+  printLine(label, addresses.length + (addresses.length === 1 ? " address" : " addresses"), "", rows);
 }
 
 function age(years) {
