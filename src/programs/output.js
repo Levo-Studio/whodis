@@ -1,6 +1,10 @@
 import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
 import { yearsSince } from "./rdap.js";
 
+const indent = "  ";
+const labelWidth = 10;
+const gap = indent + " ".repeat(labelWidth);
+
 export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
   console.log("  " + gray + "Options" + reset + "   " + bold + value + "--help, -h" + reset + "       " + gray + "show this help" + reset);
@@ -106,7 +110,7 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   printLine("Platform", platformName, gray + hint);
   if (proxy.proxied || proxy.likely) {
     for (const reason of proxy.reasons) {
-      console.log("            " + green + "✓ " + reset + gray + reason + reset);
+      console.log(gap + green + "✓ " + reset + gray + reason + reset);
     }
   }
 
@@ -161,7 +165,7 @@ function printSection(title) {
 }
 
 function printLine(label, text, extra = "") {
-  console.log("  " + gray + label.padEnd(10) + reset + bold + value + text + reset + extra + reset);
+  console.log(indent + gray + label.padEnd(labelWidth) + reset + bold + value + text + reset + extra + reset);
 }
 
 function printAddresses(label, addresses, perRow) {
@@ -170,7 +174,7 @@ function printAddresses(label, addresses, perRow) {
 
   for (let i = 0; i < addresses.length; i += perRow) {
     const row = addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd();
-    console.log("            " + value + row + reset);
+    console.log(gap + value + row + reset);
   }
 }
 
