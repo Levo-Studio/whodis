@@ -90,10 +90,10 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
 
 export function urgencyColor(days) {
   if (days <= 7) {
-      return red;
+    return red;
   } else if (days > 30) {
-      return green;
+    return green;
   } else {
-      return yellow;
+    return yellow;
   }
 }
