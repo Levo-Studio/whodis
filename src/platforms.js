@@ -23,7 +23,8 @@ export const networks = [
   { org: "digitalocean", name: "DigitalOcean" },
   { org: "ovh", name: "OVHcloud" },
   { org: "oracle", name: "Oracle Cloud" },
-  { org: "akamai", name: "Akamai / Linode" },
+  { org: "akamai connected cloud", name: "Akamai / Linode" },
+  { org: "akamai", name: "Akamai" },
   { org: "ionos", name: "IONOS" },
   { org: "strato", name: "Strato" },
   { org: "netcup", name: "netcup" },
@@ -31,4 +32,7 @@ export const networks = [
   { org: "constant company", name: "Vultr" },
   { org: "cloudflare", name: "Cloudflare" },
   { org: "fastly", name: "Fastly" },
+  { org: "bunnyway", name: "Bunny CDN" },
+  { org: "sucuri", name: "Sucuri" },
+  { org: "incapsula", name: "Imperva" },
 ];
