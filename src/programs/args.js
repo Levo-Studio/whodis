@@ -4,7 +4,6 @@ export function parseArgs(argv) {
     help: false,
     version: false,
     detailed: false,
-    ipcheck: false,
     unknown: [],
   };
 
@@ -15,8 +14,6 @@ export function parseArgs(argv) {
       result.version = true;
     } else if (arg === "--detailed" || arg === "-d") {
       result.detailed = true;
-    } else if (arg === "--ipcheck" || arg === "-i") {
-      result.ipcheck = true;
     } else if (arg.startsWith("-")) {
       result.unknown.push(arg);
     } else if (!result.domain) {
