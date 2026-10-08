@@ -50,7 +50,7 @@ Each signal gives points. 5 or more is `proxied`, 3 or 4 is `likely proxied`.
 
 The IP ranges are a snapshot in `src/cdn-ranges.js`, so whodis does not need to download anything at runtime.
 
-With `--detailed` the reasons are listed below the platform:
+With `--detailed` the reasons are listed below the platform when a site counts as proxied:
 
 ```
   Platform  Cloudflare (proxied or hosted)
@@ -58,6 +58,46 @@ With `--detailed` the reasons are listed below the platform:
             ✓ cf-ray header
             ✓ direct IP answers as Cloudflare
 ```
+
+## Detailed view
+
+`whodis <domain> --detailed` shows everything whodis knows, grouped by section.
+
+```
+  google.com
+
+  HOSTING ─────────────────────────────────────
+  IPv4      6 addresses
+            142.251.20.100    142.251.20.101    142.251.20.102
+            142.251.20.113    142.251.20.138    142.251.20.139
+  IPv6      1 address
+            2a00:1450:4001:82f::200e
+  Location  Frankfurt am Main, DE
+  Platform  Google
+  Network   Google LLC · AS15169
+
+  WEBSITE ─────────────────────────────────────
+  Redirect  → www.google.com
+  Protocol  HTTPS
+  Response  361ms · gws
+  SSL       Google Trust Services · 71 days left
+
+  DNS & MAIL ──────────────────────────────────
+  DNS       Google
+  Mail      Google Workspace
+
+  DOMAIN ──────────────────────────────────────
+  Registrar MarkMonitor Inc.
+  Since     1997 (29 years)
+```
+
+- **IPv4 / IPv6**: every address the domain resolves to
+- **Origin**: the A record of the root domain, only shown when the site is proxied but the root domain is not
+- **Response**: response time and the `server` header
+- **Mail**: who handles email, from the MX records (Google Workspace, Microsoft 365, Proton Mail, IONOS, …)
+- **Registrar / Since**: from the registry of the domain via [RDAP](https://about.rdap.org). Some registries, like DENIC for `.de`, do not publish this, so the section is left out
+
+The list of RDAP servers is a snapshot of the [IANA bootstrap file](https://data.iana.org/rdap/dns.json) in `src/rdap-servers.js`. Only registries that support HTTPS are used.
 
 ## Install
 
@@ -79,7 +119,7 @@ Paste whatever you have. `google.com`, `https://www.google.com/search?q=cats` an
 |---|---|
 | `--help`, `-h` | show help |
 | `--version`, `-v` | show the version |
-| `--detailed`, `-d` | show why a domain counts as proxied |
+| `--detailed`, `-d` | show everything, grouped by section |
 
 ## Requirements
 
@@ -87,7 +127,7 @@ Node.js 18 or newer. No dependencies, no build step.
 
 ## Privacy
 
-Network and location info comes from [ipinfo.io](https://ipinfo.io). The first IP of the domain you look up is sent there. Nothing else leaves your machine except the DNS lookups and the request to the site itself. With `--detailed`, one extra plain HTTP request goes to that IP directly, without the domain.
+Network and location info comes from [ipinfo.io](https://ipinfo.io). The first IP of the domain you look up is sent there. Nothing else leaves your machine except the DNS lookups and the request to the site itself. With `--detailed`, one extra plain HTTP request goes to that IP directly, without the domain, and the domain is looked up at its own registry over RDAP to read the registrar and registration date. No third party lookup service is used.
 
 ## Why
 

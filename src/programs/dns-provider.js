@@ -19,7 +19,7 @@ export function detectDnsProvider(nameservers) {
 
 const secondLevels = ["co", "com", "net", "org", "gov", "edu", "ac", "ne", "or"];
 
-function baseDomain(host) {
+export function baseDomain(host) {
   const parts = host.split(".");
   const tld = parts[parts.length - 1];
   const second = parts[parts.length - 2];
