@@ -53,10 +53,10 @@ The IP ranges are a snapshot in `src/cdn-ranges.js`, so whodis does not need to 
 With `--detailed` the reasons are listed below the platform when a site counts as proxied:
 
 ```
-  Platform  Cloudflare (proxied or hosted)
-            ✓ IP in Cloudflare range
-            ✓ cf-ray header
-            ✓ direct IP answers as Cloudflare
+    Platform    Cloudflare (proxied or hosted)
+                ✓ IP in Cloudflare range
+                ✓ cf-ray header
+                ✓ direct IP answers as Cloudflare
 ```
 
 ## Detailed view
@@ -66,29 +66,42 @@ With `--detailed` the reasons are listed below the platform when a site counts a
 ```
   google.com
 
-  HOSTING ─────────────────────────────────────
-  IPv4      6 addresses
-            142.251.20.100    142.251.20.101    142.251.20.102
-            142.251.20.113    142.251.20.138    142.251.20.139
-  IPv6      1 address
-            2a00:1450:4001:82f::200e
-  Location  Frankfurt am Main, DE
-  Platform  Google
-  Network   Google LLC · AS15169
+  HOSTING ─────────────────────────────────────────
 
-  WEBSITE ─────────────────────────────────────
-  Redirect  → www.google.com
-  Protocol  HTTPS
-  Response  361ms · gws
-  SSL       Google Trust Services · 71 days left
+    IPv4        6 addresses
+                142.251.20.100    142.251.20.101    142.251.20.102
+                142.251.20.113    142.251.20.138    142.251.20.139
 
-  DNS & MAIL ──────────────────────────────────
-  DNS       Google
-  Mail      Google Workspace
+    IPv6        1 address
+                2a00:1450:4001:82f::200e
 
-  DOMAIN ──────────────────────────────────────
-  Registrar MarkMonitor Inc.
-  Since     1997 (29 years)
+    Location    Frankfurt am Main, DE
+
+    Platform    Google
+
+    Network     Google LLC · AS15169
+
+  WEBSITE ─────────────────────────────────────────
+
+    Redirect    → www.google.com
+
+    Protocol    HTTPS
+
+    Response    361ms · gws
+
+    SSL         Google Trust Services · 71 days left
+
+  DNS & MAIL ──────────────────────────────────────
+
+    DNS         Google
+
+    Mail        Google Workspace
+
+  DOMAIN ──────────────────────────────────────────
+
+    Registrar   MarkMonitor Inc.
+
+    Since       1997 (29 years)
 ```
 
 - **IPv4 / IPv6**: every address the domain resolves to
