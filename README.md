@@ -30,6 +30,8 @@ You give it a domain. It looks up the IP, finds out where the website actually a
 - Tries `https`, `https://www.`, `http` and `http://www.` until something answers
 - Shows where you end up if the site redirects you
 - Warns in red if the site only speaks plain HTTP or has a broken SSL certificate
+- Shows who issued the SSL certificate and how many days are left, green above 30, yellow at 30 or less, red at 7 or less
+- Shows who runs the DNS of the domain (Cloudflare, AWS Route 53, Hetzner, …) from its nameservers
 - Detects the platform from response headers (Vercel, Netlify, Cloudflare, …) or from the network behind the IP (Hetzner, AWS, Google, …)
 - Tells you if the site sits behind a CDN like Cloudflare, Fastly or CloudFront, marked as `proxied` or `likely proxied`. If the real host is known it stays the platform and the CDN is shown as `(via Cloudflare)`
 - Shows the A record of the root domain and marks it as `likely origin` if the site is proxied but the root domain is not
