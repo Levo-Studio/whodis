@@ -16,7 +16,7 @@ export function printError(message, domain, hint = "") {
   console.log("  " + red + "✗" + reset + " " + gray + message + ": " + reset + bold + value + domain + reset + gray + hint + reset + "\n");
 }
 
-export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, detailed, rootRecord, rootOrigin }) {
+export function printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, rootRecord, rootOrigin }) {
   let extra = "";
   if (ips.length > 1) {
     extra = " (+" + (ips.length - 1) + " more)";
@@ -47,32 +47,9 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
     console.log("  " + gray + "DNS" + reset + "       " + bold + value + dnsProvider + reset + "\n");
   }
 
-  const hosted = platform !== "unknown" && platform !== proxy.cdn;
+  const { name: platformName, hint } = platformLabel(platform, proxy, false);
 
-  let platformName = platform;
-  let hint = "";
-  if ((proxy.proxied || proxy.likely) && hosted) {
-    hint = " (via " + proxy.cdn + ")";
-  } else if (proxy.proxied && detailed && proxy.cdn === "Cloudflare") {
-    platformName = proxy.cdn;
-    hint = " (proxied or hosted)";
-  } else if (proxy.proxied) {
-    platformName = proxy.cdn;
-    hint = " (proxied)";
-  } else if (proxy.likely) {
-    platformName = proxy.cdn;
-    hint = " (likely proxied)";
-  }
-
-  if (detailed && proxy.reasons.length > 0) {
-    console.log("  " + gray + "Platform" + reset + "  " + bold + value + platformName + reset + gray + hint + reset);
-    for (const reason of proxy.reasons) {
-      console.log("            " + green + "✓ " + reset + gray + reason + reset);
-    }
-    console.log("");
-  } else {
-    console.log("  " + gray + "Platform" + reset + "  " + bold + value + platformName + reset + gray + hint + reset + "\n");
-  }
+  console.log("  " + gray + "Platform" + reset + "  " + bold + value + platformName + reset + gray + hint + reset + "\n");
 
   if (ipInfo.org) {
     console.log("  " + gray + "Network" + reset + "   " + bold + value + orgName + " · " + ipInfo.city + ", " + ipInfo.country + reset + "\n");
@@ -86,6 +63,22 @@ export function printResult({ domain, redirect, insecure, ips, responseTime, pla
   }
 
   console.log("  " + gray + "A record" + reset + "  " + bold + value + (rootRecord ?? "none") + reset + yellow + rootHint + reset + "\n");
+}
+
+function platformLabel(platform, proxy, detailed) {
+  const hosted = platform !== "unknown" && platform !== proxy.cdn;
+
+  if ((proxy.proxied || proxy.likely) && hosted) {
+    return { name: platform, hint: " (via " + proxy.cdn + ")" };
+  } else if (proxy.proxied && detailed && proxy.cdn === "Cloudflare") {
+    return { name: proxy.cdn, hint: " (proxied or hosted)" };
+  } else if (proxy.proxied) {
+    return { name: proxy.cdn, hint: " (proxied)" };
+  } else if (proxy.likely) {
+    return { name: proxy.cdn, hint: " (likely proxied)" };
+  } else {
+    return { name: platform, hint: "" };
+  }
 }
 
 export function urgencyColor(days) {

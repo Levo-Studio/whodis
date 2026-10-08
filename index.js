@@ -89,6 +89,6 @@ const rootOrigin = proxy.proxied && rootRecord !== null && rootRecord !== ips[0]
 
 stopSpinner();
 
-printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, detailed: args.detailed, rootRecord, rootOrigin });
+printResult({ domain, redirect, insecure, ips, responseTime, platform, ipInfo, orgName, certificateError, certificate, dnsProvider, proxy, rootRecord, rootOrigin });
 
 process.exit(0);
