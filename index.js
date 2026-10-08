@@ -73,13 +73,13 @@ const { response, url, responseTime, certificateError } = connection;
 const landed = new URL(url);
 const redirect = landed.hostname !== domain ? landed.hostname : null;
 const insecure = landed.protocol === "http:";
-const certificate = insecure ? null : await getCertificate(landed.hostname);
 
-const [ipInfo, probe] = await Promise.all([
+const [certificate, ipInfo, probe, { zone, nameservers }] = await Promise.all([
+  insecure ? null : getCertificate(landed.hostname),
   getNetworkInfo(ips[0]),
   args.detailed ? probeIp(ips[0]) : null,
+  getNameservers(domain),
 ]);
-const { zone, nameservers } = await getNameservers(domain);
 const dnsProvider = detectDnsProvider(nameservers);
 const rootRecord = await getRootRecord(zone);
 const orgName = (ipInfo.org ?? "").split(" ").slice(1).join(" ");
