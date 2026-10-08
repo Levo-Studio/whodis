@@ -1,6 +1,6 @@
 {
   "name": "whodiskit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Ask a domain who it is. It usually answers.",
   "type": "module",
   "bin": {
@@ -30,8 +30,5 @@
   "bugs": {
     "url": "https://github.com/Levo-Studio/whodis/issues"
   },
-  "homepage": "https://github.com/Levo-Studio/whodis#readme",
-  "dependencies": {
-    "whodiskit": "^1.0.0"
-  }
+  "homepage": "https://github.com/Levo-Studio/whodis#readme"
 }

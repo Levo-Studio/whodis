@@ -1,6 +1,10 @@
 import { gray, bold, value, reset, red, green, yellow } from "../colors.js";
 import { yearsSince } from "./rdap.js";
 
+const indent = "    ";
+const labelWidth = 12;
+const gap = indent + " ".repeat(labelWidth);
+
 export function printHelp() {
   console.log("  " + gray + "Usage" + reset + "     " + bold + value + "whodis <domain> [options]" + reset + "\n");
   console.log("  " + gray + "Options" + reset + "   " + bold + value + "--help, -h" + reset + "       " + gray + "show this help" + reset);
@@ -103,12 +107,8 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   printLine("Location", ipInfo.city ? ipInfo.city + ", " + ipInfo.country : "unavailable");
 
   const { name: platformName, hint } = platformLabel(platform, proxy, true);
-  printLine("Platform", platformName, gray + hint);
-  if (proxy.proxied || proxy.likely) {
-    for (const reason of proxy.reasons) {
-      console.log("            " + green + "✓ " + reset + gray + reason + reset);
-    }
-  }
+  const reasons = proxy.proxied || proxy.likely ? proxy.reasons.map((reason) => green + "✓ " + reset + gray + reason) : [];
+  printLine("Platform", platformName, gray + hint, reasons);
 
   if (ipInfo.org) {
     printLine("Network", orgName + " · " + ipInfo.org.split(" ")[0]);
@@ -119,7 +119,6 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   if (rootOrigin) {
     printLine("Origin", rootRecord, yellow + " (root domain not proxied)");
   }
-  console.log("");
 
   printSection("WEBSITE");
   if (redirect) {
@@ -137,12 +136,10 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   if (certificateError) {
     printLine("SSL", red + certificateError);
   }
-  console.log("");
 
   printSection("DNS & MAIL");
   printLine("DNS", dnsProvider || "unavailable");
   printLine("Mail", mailProvider || "none");
-  console.log("");
 
   if (registration) {
     printSection("DOMAIN");
@@ -152,26 +149,30 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
     if (registration.since) {
       printLine("Since", registration.since.slice(0, 4) + " (" + age(yearsSince(registration.since)) + ")");
     }
-    console.log("");
   }
 }
 
 function printSection(title) {
-  console.log("  " + bold + gray + title + reset + " " + gray + "─".repeat(44 - title.length) + reset);
+  console.log("  " + bold + gray + title + reset + " " + gray + "─".repeat(48 - title.length) + reset + "\n");
 }
 
-function printLine(label, text, extra = "") {
-  console.log("  " + gray + label.padEnd(10) + reset + bold + value + text + reset + extra + reset);
+function printLine(label, text, extra = "", below = []) {
+  console.log(indent + gray + label.padEnd(labelWidth) + reset + bold + value + text + reset + extra + reset);
+  for (const line of below) {
+    console.log(gap + line + reset);
+  }
+  console.log("");
 }
 
 function printAddresses(label, addresses, perRow) {
-  printLine(label, addresses.length + (addresses.length === 1 ? " address" : " addresses"));
   const width = Math.max(...addresses.map((a) => a.length)) + 4;
+  const rows = [];
 
   for (let i = 0; i < addresses.length; i += perRow) {
-    const row = addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd();
-    console.log("            " + value + row + reset);
+    rows.push(gray + addresses.slice(i, i + perRow).map((a) => a.padEnd(width)).join("").trimEnd());
   }
+
+  printLine(label, addresses.length + (addresses.length === 1 ? " address" : " addresses"), "", rows);
 }
 
 function age(years) {
