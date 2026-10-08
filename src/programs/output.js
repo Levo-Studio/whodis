@@ -119,7 +119,6 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   if (rootOrigin) {
     printLine("Origin", rootRecord, yellow + " (root domain not proxied)");
   }
-  console.log("");
 
   printSection("WEBSITE");
   if (redirect) {
@@ -137,12 +136,10 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
   if (certificateError) {
     printLine("SSL", red + certificateError);
   }
-  console.log("");
 
   printSection("DNS & MAIL");
   printLine("DNS", dnsProvider || "unavailable");
   printLine("Mail", mailProvider || "none");
-  console.log("");
 
   if (registration) {
     printSection("DOMAIN");
@@ -152,7 +149,6 @@ export function printDetailed({ domain, redirect, insecure, ips, ipv6, responseT
     if (registration.since) {
       printLine("Since", registration.since.slice(0, 4) + " (" + age(yearsSince(registration.since)) + ")");
     }
-    console.log("");
   }
 }
 
@@ -165,6 +161,7 @@ function printLine(label, text, extra = "", below = []) {
   for (const line of below) {
     console.log(gap + line + reset);
   }
+  console.log("");
 }
 
 function printAddresses(label, addresses, perRow) {
