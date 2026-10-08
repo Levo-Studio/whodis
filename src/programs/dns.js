@@ -40,3 +40,27 @@ export async function getRootRecord(zone) {
     return null;
   }
 }
+
+export async function getIpv6(host) {
+  try {
+    return await dns.resolve6(host);
+  } catch {
+    return [];
+  }
+}
+
+export async function getMailServers(zone) {
+  if (!zone) {
+    return [];
+  }
+
+  try {
+    const records = await dns.resolveMx(zone);
+    return records
+      .filter((r) => r.exchange !== "" && r.exchange !== ".")
+      .sort((a, b) => a.priority - b.priority)
+      .map((r) => r.exchange);
+  } catch {
+    return [];
+  }
+}
