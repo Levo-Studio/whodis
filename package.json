@@ -30,8 +30,5 @@
   "bugs": {
     "url": "https://github.com/Levo-Studio/whodis/issues"
   },
-  "homepage": "https://github.com/Levo-Studio/whodis#readme",
-  "dependencies": {
-    "whodiskit": "^1.0.0"
-  }
+  "homepage": "https://github.com/Levo-Studio/whodis#readme"
 }
