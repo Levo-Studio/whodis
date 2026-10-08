@@ -3,10 +3,24 @@
   "version": "1.0.0",
   "description": "Ask a domain who it is. It usually answers.",
   "type": "module",
-  "bin": { "whodis": "index.js" },
-  "files": ["index.js", "src"],
-  "engines": { "node": ">=18" },
-  "keywords": ["cli", "dns", "domain", "hosting", "whois", "network"],
+  "bin": {
+    "whodis": "index.js"
+  },
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cli",
+    "dns",
+    "domain",
+    "hosting",
+    "whois",
+    "network"
+  ],
   "author": "Julius Grimm",
   "license": "MIT",
   "repository": {
@@ -16,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/Levo-Studio/whodis/issues"
   },
-  "homepage": "https://github.com/Levo-Studio/whodis#readme"
+  "homepage": "https://github.com/Levo-Studio/whodis#readme",
+  "dependencies": {
+    "whodiskit": "^1.0.0"
+  }
 }
